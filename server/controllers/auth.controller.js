@@ -9,7 +9,7 @@ const authController = {
 		 const token = await authService.genAuthToken(user)
 		 res.cookie('x-access-token', token).status(httpStatus.CREATED).send({user, token})
 	  } catch (error) {
-		 res.status(httpStatus.BAD_REQUEST).send(error.message)
+		 next(error)
 	  }
    },
    async signin(req, res, next) {
@@ -19,7 +19,7 @@ const authController = {
 		 const token = await authService.genAuthToken(user)
 		 res.cookie('x-access-token', token).send({user, token})
 	  } catch (error) {
-		 res.status(httpStatus.BAD_REQUEST).send(error.message)
+		 next(error)
 	  }
    }
 }
