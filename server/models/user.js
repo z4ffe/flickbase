@@ -52,6 +52,11 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
    return await bcrypt.compare(candidatePassword, this.password)
 }
 
+userSchema.methods.generateVerificationToken = function () {
+   const userObj = {sub: this._id.toHexString()}
+   return jwt.sign(userObj, process.env.DB_SECRET, {expiresIn: "10h"})
+}
+
 //
 
 const User = mongoose.model('User', userSchema);

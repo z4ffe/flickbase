@@ -13,7 +13,7 @@ router.route('/profile')
    .patch(auth('updateOwn', 'profile'), userController.updateProfile)
 
 router.patch('/email', auth('updateOwn', 'profile'), userController.updateUserEmail)
-
+router.patch('/verify', userController.verifyAccount)
 
 
 

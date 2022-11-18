@@ -1,6 +1,6 @@
 const httpStatus = require('http-status')
 const {ApiError} = require("../middleware/apiError");
-const {userService, authService} = require('../services')
+const {userService, authService, emailService} = require('../services')
 
 const userController = {
    async profile(req, res, next) {
@@ -24,7 +24,24 @@ const userController = {
 	  try {
 		 const user = await userService.updateUserEmail(req)
 		 const token = await authService.genAuthToken(user)
+		 await emailService.registerEmail(user.email, user)
 		 res.cookie('x-access-token', token).send({user: res.locals.permission.filter(user._doc), token})
+	  } catch (error) {
+		 next(error)
+	  }
+   },
+   async verifyAccount(req, res, next) {
+	  try {
+		 const token = userService.validateToken(req.query.validation)
+		 const user = await userService.findUserById(token.sub)
+		 if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+		 if (user.verified) throw new ApiError(httpStatus.NOT_FOUND, 'Account already verified')
+		 user.verified = true
+		 user.save()
+		 res.status(httpStatus.CREATED).send({
+			email: user.email,
+			verified: true
+		 })
 	  } catch (error) {
 		 next(error)
 	  }
