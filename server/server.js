@@ -1,11 +1,12 @@
 const express = require('express')
+const app = express()
 const mongoose = require('mongoose')
 const xss = require('xss-clean')
 const mongoSanitize = require('express-mongo-sanitize')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const cors = require('cors');
 const dotenv = require('dotenv').config()
-const app = express()
 const routes = require('./routes')
 const {jwtStrategy} = require('./middleware/passport')
 const {handleError, convertToApiError} = require('./middleware/apiError')
@@ -18,6 +19,7 @@ app.use(bodyParser.json())
 app.use(xss())
 app.use(mongoSanitize())
 app.use(passport.initialize())
+app.use(cors())
 passport.use('jwt', jwtStrategy)
 
 // routes
