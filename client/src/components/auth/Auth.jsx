@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Yup from 'yup'
 import {registerUser, signInUser} from '../../store/thunks/users';
-import {errorHelper} from '../../utils/tools';
+import {errorHelper, Loader} from '../../utils/tools';
 
 const Auth = () => {
 	const [register, setRegister] = useState(false)
@@ -40,31 +40,32 @@ const Auth = () => {
 	return (
 		<div className="auth_container">
 			<h1>Authenticate</h1>
-			<Box sx={{
-				'& .MuiTextField-root': {
-					width: '100%', marginTop: '20px'
-				}
-			}} component="form" onSubmit={formik.handleSubmit}>
-				<TextField name="email"
-							  label="Enter your email"
-							  variant="outlined" {...formik.getFieldProps('email')}
-							  {...errorHelper(formik, 'email')}>
+			{usersReducer.loading ? <Loader/> :
+				<Box sx={{
+					'& .MuiTextField-root': {
+						width: '100%', marginTop: '20px'
+					}
+				}} component="form" onSubmit={formik.handleSubmit}>
+					<TextField name="email"
+								  label="Enter your email"
+								  variant="outlined" {...formik.getFieldProps('email')}
+								  {...errorHelper(formik, 'email')}>
 
-				</TextField>
-				<TextField name="password"
-							  label="Enter your password"
-							  variant="outlined"
-							  type="password" {...formik.getFieldProps('password')}
-							  {...errorHelper(formik, 'email')}>
+					</TextField>
+					<TextField name="password"
+								  label="Enter your password"
+								  variant="outlined"
+								  type="password" {...formik.getFieldProps('password')}
+								  {...errorHelper(formik, 'email')}>
 
-				</TextField>
-				<div className="mt-2">
-					<Button type="submit" color="primary" variant="contained"
-							  size="large">{register ? 'Register' : 'Login'}</Button>
-					<Button className="mt-3" color="secondary" variant="contained" size="small"
-							  onClick={() => setRegister(!register)}>Want to {register ? 'Login' : 'Register'}?</Button>
-				</div>
-			</Box>
+					</TextField>
+					<div className="mt-2">
+						<Button type="submit" color="primary" variant="contained"
+								  size="large">{register ? 'Register' : 'Login'}</Button>
+						<Button className="mt-3" color="secondary" variant="contained" size="small"
+								  onClick={() => setRegister(!register)}>Want to {register ? 'Login' : 'Register'}?</Button>
+					</div>
+				</Box>}
 		</div>);
 };
 
