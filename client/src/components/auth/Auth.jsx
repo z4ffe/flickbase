@@ -1,7 +1,8 @@
 import {Box, Button, TextField} from '@mui/material';
 import {useFormik} from 'formik';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import * as Yup from 'yup'
 import {registerUser, signInUser} from '../../store/thunks/users';
 import {errorHelper, Loader} from '../../utils/tools';
@@ -9,7 +10,9 @@ import {errorHelper, Loader} from '../../utils/tools';
 const Auth = () => {
 	const [register, setRegister] = useState(false)
 	const usersReducer = useSelector(state => state.users)
+	const notificationsReducer = useSelector(state => state.notifications)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const formik = useFormik({
 		initialValues: {
@@ -36,6 +39,12 @@ const Auth = () => {
 			dispatch(signInUser(values))
 		}
 	};
+
+	useEffect(() => {
+		if (notificationsReducer && notificationsReducer.global.success) {
+			navigate('/dashboard')
+		}
+	}, [notificationsReducer])
 
 	return (
 		<div className="auth_container">

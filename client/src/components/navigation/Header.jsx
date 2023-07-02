@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {clearNotifications} from '../../store/reducers/notifications';
+import {showToast} from '../../utils/tools';
 import SideNav from './SideNav';
 
 const Header = () => {
@@ -11,11 +12,12 @@ const Header = () => {
 	useEffect(() => {
 		const {global} = notificationsStore
 		if (notificationsStore && global.error) {
-			console.log('error')
+			const message = global.msg ? global.msg : 'Internal error'
+			showToast('ERROR', notificationsStore.global.msg)
 			dispatch(clearNotifications())
 		}
 		if (notificationsStore && global.success) {
-			console.log('success')
+			showToast('SUCCESS', notificationsStore.global.msg)
 			dispatch(clearNotifications())
 		}
 	}, [notificationsStore])

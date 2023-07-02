@@ -1,10 +1,11 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
-import {errorGlobal, successGlobal} from '../reducers/notifications';
+import {createAsyncThunk} from '@reduxjs/toolkit'
+import {LOCAL_API} from '../../lib/axios/instance'
+import {getAuthHeader} from '../../utils/cookies'
+import {errorGlobal, successGlobal} from '../reducers/notifications'
 
 export const registerUser = createAsyncThunk('users/registerUser', async ({email, password}, {dispatch}) => {
 	try {
-		const response = await axios.post(`${process.env.REACT_APP_API}/auth/register`, {
+		const response = await LOCAL_API.post('/auth/register', {
 			email: email,
 			password: password
 		})
@@ -21,7 +22,7 @@ export const registerUser = createAsyncThunk('users/registerUser', async ({email
 
 export const signInUser = createAsyncThunk('users/signInUser', async ({email, password}, {dispatch}) => {
 	try {
-		const response = await axios.post(`${process.env.REACT_APP_API}/auth/signin`, {
+		const response = await LOCAL_API.post('/auth/signin', {
 			email: email,
 			password: password
 		})
@@ -35,3 +36,21 @@ export const signInUser = createAsyncThunk('users/signInUser', async ({email, pa
 		throw error
 	}
 })
+
+export const isAuth = createAsyncThunk('users/isAuth', async () => {
+	try {
+		const response = await LOCAL_API.get('/auth/isauth', {
+			headers: getAuthHeader()
+		})
+		return {
+			data: response.data,
+			auth: true
+		}
+	} catch (error) {
+		return {
+			data: {},
+			auth: false
+		}
+	}
+})
+

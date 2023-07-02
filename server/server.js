@@ -5,21 +5,25 @@ const xss = require('xss-clean')
 const mongoSanitize = require('express-mongo-sanitize')
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const cors = require('cors');
+const cors = require('cors')
 const dotenv = require('dotenv').config()
 const routes = require('./routes')
 const {jwtStrategy} = require('./middleware/passport')
 const {handleError, convertToApiError} = require('./middleware/apiError')
 const DB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@${process.env.DB_HOST}?retryWrites=true&w=majority`
+mongoose.set({strictQuery: true})
 mongoose.connect(DB)
 
 // global middleware
 
+app.use(cors({
+	origin: 'http://localhost:3000',
+	credentials: true
+}))
 app.use(bodyParser.json())
 app.use(xss())
 app.use(mongoSanitize())
 app.use(passport.initialize())
-app.use(cors())
 passport.use('jwt', jwtStrategy)
 
 // routes

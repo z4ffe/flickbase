@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {registerUser, signInUser} from '../thunks/users';
+import {createSlice} from '@reduxjs/toolkit'
+import {isAuth, registerUser, signInUser} from '../thunks/users'
 
 const DEFAULT_USER_STATE = {
 	loading: false,
@@ -39,6 +39,20 @@ export const usersSlice = createSlice({
 			state.auth = action.payload.auth
 		})
 		builder.addCase(signInUser.rejected, (state, action) => {
+			state.loading = false
+		})
+		builder.addCase(isAuth.pending, (state) => {
+			state.loading = true
+		})
+		builder.addCase(isAuth.fulfilled, (state, action) => {
+			state.loading = false
+			state.data = {
+				...state.data,
+				...action.payload.data
+			}
+			state.auth = action.payload.auth
+		})
+		builder.addCase(isAuth.rejected, (state, action) => {
 			state.loading = false
 		})
 	}
