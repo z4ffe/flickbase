@@ -23,6 +23,11 @@ export const showToast = (type, message) => {
 				position: 'top-right'
 			})
 			break
+		case('WARN'):
+			toast.warn(message, {
+				position: 'top-right'
+			})
+			break
 		case('ERROR'):
 			toast.error(message, {
 				position: 'top-right'

@@ -17,7 +17,13 @@ const DEFAULT_USER_STATE = {
 export const usersSlice = createSlice({
 	name: 'users',
 	initialState: DEFAULT_USER_STATE,
-	reducers: {},
+	reducers: {
+		signOut: (state) => {
+			state.data = DEFAULT_USER_STATE.data
+			state.loading = false
+			state.auth = false
+		}
+	},
 	extraReducers: (builder) => {
 		builder.addCase(registerUser.pending, (state) => {
 			state.loading = true
@@ -58,4 +64,5 @@ export const usersSlice = createSlice({
 	}
 })
 
+export const {signOut} = usersSlice.actions
 export default usersSlice.reducer
