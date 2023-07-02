@@ -5,6 +5,7 @@ import Auth from '../components/auth/Auth'
 import {Dashboard} from '../components/dashboard/Dashboard'
 import Home from '../components/home/Home'
 import Header from '../components/navigation/Header'
+import {AuthGuard} from '../hoc/AuthGuard'
 import MainLayout from '../hoc/MainLayout'
 import {isAuth} from '../store/thunks/users'
 import {Loader} from '../utils/tools'
@@ -31,9 +32,9 @@ const Router = () => {
 					<Header/>
 					<MainLayout>
 						<Routes>
-							<Route path="auth" element={<Auth/>}/>
 							<Route path="/" element={<Home/>}/>
-							<Route path="dashboard" element={<Dashboard/>}/>
+							<Route path="auth" element={<Auth/>}/>
+							<Route path="dashboard" element={<AuthGuard><Dashboard/></AuthGuard>}/>
 						</Routes>
 					</MainLayout>
 				</>
