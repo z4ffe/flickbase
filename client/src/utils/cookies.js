@@ -9,9 +9,5 @@ export const removeTokenCookie = () => {
 }
 
 export const getAuthHeader = () => {
-	return {
-		headers: {
-			'Authorization': `Bearer: ${getTokenCookie()}`
-		}
-	}
+	return `Bearer ${getTokenCookie()}`
 }

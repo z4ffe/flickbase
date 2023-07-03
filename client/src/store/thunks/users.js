@@ -40,7 +40,9 @@ export const signInUser = createAsyncThunk('users/signInUser', async ({email, pa
 export const isAuth = createAsyncThunk('users/isAuth', async () => {
 	try {
 		const response = await LOCAL_API.get('/auth/isauth', {
-			headers: getAuthHeader()
+			headers: {
+				'Authorization': getAuthHeader()
+			}
 		})
 		return {
 			data: response.data,
