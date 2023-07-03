@@ -48,7 +48,7 @@ const Auth = () => {
 	}, [notificationsReducer])
 
 	return (
-		<PreventSignIn auth={usersReducer.auth}>
+		<PreventSignIn>
 			<div className="auth_container">
 				<h1>Authenticate</h1>
 				{usersReducer.loading ? <Loader/> :
@@ -78,7 +78,8 @@ const Auth = () => {
 						</div>
 					</Box>}
 			</div>
-		</PreventSignIn>)
+		</PreventSignIn>
+	)
 
 }
 
