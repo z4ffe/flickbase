@@ -1,22 +1,13 @@
-import {CircularProgress} from '@mui/material'
 import {toast} from 'react-toastify'
 
-export const errorHelper = (formik, values) => (
+export const errorHelper = (formik: any, values: any) => (
 	{
 		error: !!(formik.errors[values] && formik.touched[values]),
 		helperText: (formik.errors[values] && formik.touched[values]) ? formik.errors[values] : null
 	}
 )
 
-export const Loader = () => {
-	return (
-		<div className="root_loader">
-			<CircularProgress/>
-		</div>
-	)
-}
-
-export const showToast = (type, message) => {
+export const showToast = (type: any, message: any) => {
 	switch (type) {
 		case('SUCCESS'):
 			toast.success(message, {

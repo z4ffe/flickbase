@@ -1,8 +1,9 @@
 import {List, ListItemButton} from '@mui/material'
 import ListItemText from '@mui/material/ListItemText'
+import {FC, PropsWithChildren} from 'react';
 import {Link} from 'react-router-dom'
 
-export const AdminLayout = ({children}) => {
+export const AdminLayout: FC<PropsWithChildren> = ({children}) => {
 	return (<div className="row adminLayout">
 		<nav className="col-md-2 d-none d-md-block sidebar">
 			<List>

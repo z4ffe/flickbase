@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {isAuth, registerUser, signInUser} from '../thunks/users'
+import {isAuth, registerUser, signInUser} from '../thunks/users.js'
 
 const DEFAULT_USER_STATE = {
 	loading: false,

@@ -1,10 +1,8 @@
 import DashboardIcon from '@mui/icons-material/Dashboard'
-
 import DehazeIcon from '@mui/icons-material/Dehaze'
 import HomeIcon from '@mui/icons-material/Home'
 import MailIcon from '@mui/icons-material/Mail'
 import VpnKeyIcon from '@mui/icons-material/VpnKey'
-
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
@@ -12,16 +10,16 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import React, {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useState} from 'react'
 import {Link as RouterLink, useNavigate} from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
 import {signOut} from '../../store/reducers/users'
 import {removeTokenCookie} from '../../utils/cookies'
 import {showToast} from '../../utils/tools'
 
 const SideNav = () => {
-	const usersReducer = useSelector(state => state.users)
-	const dispatch = useDispatch()
+	const usersReducer = useAppSelector(state => state.users)
+	const dispatch = useAppDispatch()
 	const [open, setOpen] = useState(false)
 	const navigate = useNavigate()
 
@@ -35,44 +33,44 @@ const SideNav = () => {
 
 	return (
 		<>
-			<DehazeIcon className="drawer_btn" onClick={() => setOpen(!open)}/>
+			<DehazeIcon className='drawer_btn' onClick={() => setOpen(!open)} />
 			<Drawer anchor={'right'} open={open} onClose={() => setOpen(!open)}>
 				<Box sx={{width: 200}}>
 					<List>
-						<ListItem button component={RouterLink} to="/" onClick={() => setOpen(!open)}>
+						<ListItem button component={RouterLink} to='/' onClick={() => setOpen(!open)}>
 							<ListItemIcon>
-								<HomeIcon/>
+								<HomeIcon />
 							</ListItemIcon>
-							<ListItemText primary="Home"/>
+							<ListItemText primary='Home' />
 						</ListItem>
-						<ListItem button component={RouterLink} to="/contact" onClick={() => setOpen(!open)}>
+						<ListItem button component={RouterLink} to='/contact' onClick={() => setOpen(!open)}>
 							<ListItemIcon>
-								<MailIcon/>
+								<MailIcon />
 							</ListItemIcon>
-							<ListItemText primary="Contact"/>
+							<ListItemText primary='Contact' />
 						</ListItem>
 						{!usersReducer.auth ?
-							<ListItem button component={RouterLink} to="/auth" onClick={() => setOpen(!open)}>
+							<ListItem button component={RouterLink} to='/auth' onClick={() => setOpen(!open)}>
 								<ListItemIcon>
-									<VpnKeyIcon/>
+									<VpnKeyIcon />
 								</ListItemIcon>
-								<ListItemText primary="Sign In"/>
+								<ListItemText primary='Sign In' />
 							</ListItem>
 							:
 							<ListItem button onClick={handleSignOut}>
 								<ListItemIcon>
-									<VpnKeyIcon/>
+									<VpnKeyIcon />
 								</ListItemIcon>
-								<ListItemText primary="Sign Out"/>
+								<ListItemText primary='Sign Out' />
 							</ListItem>}
 						{usersReducer.auth ?
 							<>
-								<Divider/>
-								<ListItem button component={RouterLink} to="/dashboard" onClick={() => setOpen(!open)}>
+								<Divider />
+								<ListItem button component={RouterLink} to='/dashboard' onClick={() => setOpen(!open)}>
 									<ListItemIcon>
-										<DashboardIcon/>
+										<DashboardIcon />
 									</ListItemIcon>
-									<ListItemText primary="Dashboard"/>
+									<ListItemText primary='Dashboard' />
 								</ListItem>
 							</> : null}
 					</List>
