@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Auth from '../components/auth/Auth'
+import {ArticlesPanel} from '../components/dashboard/ArticlesPanel'
 import {Dashboard} from '../components/dashboard/Dashboard'
+import {ProfilePanel} from '../components/dashboard/ProfilePanel'
 import Home from '../components/home/Home'
 import Header from '../components/navigation/Header'
 import {AuthGuard} from '../hoc/AuthGuard'
-import MainLayout from '../hoc/MainLayout'
+import {AdminLayout} from '../layouts/AdminLayout'
+import MainLayout from '../layouts/MainLayout'
 import {isAuth} from '../store/thunks/users'
 import {Loader} from '../utils/tools'
 
@@ -34,7 +37,15 @@ const Router = () => {
 						<Routes>
 							<Route path="/" element={<Home/>}/>
 							<Route path="auth" element={<Auth/>}/>
-							<Route path="dashboard" element={<AuthGuard><Dashboard/></AuthGuard>}/>
+							<Route path="dashboard"
+									 element={<AuthGuard>
+										 <AdminLayout>
+											 <Dashboard/>
+										 </AdminLayout>
+									 </AuthGuard>}>
+								<Route path="articles" element={<ArticlesPanel/>}/>
+								<Route path="profile" element={<ProfilePanel/>}/>
+							</Route>
 						</Routes>
 					</MainLayout>
 				</>
