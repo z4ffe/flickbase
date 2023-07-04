@@ -1,7 +1,8 @@
 import {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
-import {clearNotifications} from '../../store/reducers/notifications'
+import {notificationsActions} from '../../store/notifications/notificationsSlice.ts'
+
 import {showToast} from '../../utils/tools.ts'
 import SideNav from './SideNav.tsx'
 
@@ -16,13 +17,13 @@ const Header = () => {
 			// const message = global.msg ? global.msg : 'Internal error' TODO: why not use?
 			// @ts-ignore
 			showToast('ERROR', notificationsReducer.global.msg)
-			dispatch(clearNotifications())
+			dispatch(notificationsActions.clearNotifications())
 		}
 		// @ts-ignore
 		if (notificationsReducer && global.success) {
 			// @ts-ignore
 			showToast('SUCCESS', notificationsReducer.global.msg)
-			dispatch(clearNotifications())
+			dispatch(notificationsActions.clearNotifications())
 		}
 	}, [notificationsReducer])
 

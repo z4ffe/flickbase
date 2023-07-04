@@ -1,7 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {isAuth, registerUser, signInUser} from '../thunks/users.js'
+import {isAuth, registerUser, signInUser} from './usersThunk.ts'
 
-const DEFAULT_USER_STATE = {
+interface IUsersSlice {
+	loading: boolean
+	data: {
+		_id: null | number,
+		email: null | string,
+		firstname: null | string,
+		lastname: null | string,
+		age: null | string,
+		verified: null | string,
+	},
+	auth: null | boolean,
+}
+
+const DEFAULT_USER_STATE: IUsersSlice = {
 	loading: false,
 	data: {
 		_id: null,
@@ -9,9 +22,9 @@ const DEFAULT_USER_STATE = {
 		firstname: null,
 		lastname: null,
 		age: null,
-		verified: null
+		verified: null,
 	},
-	auth: null
+	auth: null,
 }
 
 export const usersSlice = createSlice({
@@ -22,7 +35,7 @@ export const usersSlice = createSlice({
 			state.data = DEFAULT_USER_STATE.data
 			state.loading = false
 			state.auth = false
-		}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(registerUser.pending, (state) => {
@@ -33,7 +46,7 @@ export const usersSlice = createSlice({
 			state.data = action.payload.data
 			state.auth = action.payload.auth
 		})
-		builder.addCase(registerUser.rejected, (state, action) => {
+		builder.addCase(registerUser.rejected, (state) => {
 			state.loading = false
 		})
 		builder.addCase(signInUser.pending, (state) => {
@@ -44,7 +57,7 @@ export const usersSlice = createSlice({
 			state.data = action.payload.data
 			state.auth = action.payload.auth
 		})
-		builder.addCase(signInUser.rejected, (state, action) => {
+		builder.addCase(signInUser.rejected, (state) => {
 			state.loading = false
 		})
 		builder.addCase(isAuth.pending, (state) => {
@@ -54,15 +67,12 @@ export const usersSlice = createSlice({
 			state.loading = false
 			state.data = {
 				...state.data,
-				...action.payload.data
+				...action.payload.data,
 			}
 			state.auth = action.payload.auth
 		})
-		builder.addCase(isAuth.rejected, (state, action) => {
+		builder.addCase(isAuth.rejected, (state) => {
 			state.loading = false
 		})
-	}
+	},
 })
-
-export const {signOut} = usersSlice.actions
-export default usersSlice.reducer

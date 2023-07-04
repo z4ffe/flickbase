@@ -3,10 +3,10 @@ import {useFormik} from 'formik'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import * as Yup from 'yup'
-import {PreventSignIn} from '../../hoc/PreventSignIn.tsx'
+import {PreventSignIn} from '../../guards/PreventSignIn.tsx'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
 import {Loader} from '../../shared/Loader.tsx'
-import {registerUser, signInUser} from '../../store/thunks/users'
+import {registerUser, signInUser} from '../../store/users/usersThunk.ts'
 import {errorHelper} from '../../utils/tools'
 
 const Auth = () => {
@@ -15,6 +15,14 @@ const Auth = () => {
 	const notificationsReducer = useAppSelector((state: any) => state.notifications)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+
+	const handleSubmit = (values: any) => {
+		if (register) {
+			dispatch(registerUser(values))
+		} else {
+			dispatch(signInUser(values))
+		}
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -34,15 +42,6 @@ const Auth = () => {
 		},
 	})
 
-	const handleSubmit = (values: any) => {
-		if (register) {
-			// @ts-ignore
-			dispatch(registerUser(values))
-		} else {
-			// @ts-ignore
-			dispatch(signInUser(values))
-		}
-	}
 
 	useEffect(() => {
 		if (notificationsReducer && notificationsReducer.global.success) {

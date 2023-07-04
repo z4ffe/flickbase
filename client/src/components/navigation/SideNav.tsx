@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText'
 import {useState} from 'react'
 import {Link as RouterLink, useNavigate} from 'react-router-dom'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
-import {signOut} from '../../store/reducers/users'
+import {usersActions} from '../../store/store.ts'
 import {removeTokenCookie} from '../../utils/cookies'
 import {showToast} from '../../utils/tools'
 
@@ -24,7 +24,7 @@ const SideNav = () => {
 	const navigate = useNavigate()
 
 	const handleSignOut = () => {
-		dispatch(signOut())
+		dispatch(usersActions.signOut())
 		removeTokenCookie()
 		navigate('/')
 		setOpen(false)

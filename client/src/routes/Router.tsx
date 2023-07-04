@@ -6,12 +6,12 @@ import {Dashboard} from '../components/dashboard/Dashboard.tsx'
 import {ProfilePanel} from '../components/dashboard/ProfilePanel.tsx'
 import {Home} from '../components/home/Home.tsx'
 import Header from '../components/navigation/Header.tsx'
-import {AuthGuard} from '../hoc/AuthGuard.tsx'
+import {AuthGuard} from '../guards/AuthGuard.tsx'
 import {AdminLayout} from '../layouts/AdminLayout.tsx'
 import MainLayout from '../layouts/MainLayout.tsx'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks.ts'
 import {Loader} from '../shared/Loader.tsx'
-import {isAuth} from '../store/thunks/users.js'
+import {isAuth} from '../store/users/usersThunk.ts'
 
 const Router = () => {
 	const usersReducer = useAppSelector((state: any) => state.users)
@@ -19,7 +19,7 @@ const Router = () => {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		dispatch(isAuth() as any)
+		dispatch(isAuth())
 	}, [])
 
 	useEffect(() => {
