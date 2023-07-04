@@ -8,29 +8,26 @@ import SideNav from './SideNav.tsx'
 
 const Header = () => {
 	const notificationsReducer = useAppSelector(state => state.notifications)
+	const layout = useAppSelector(state => state.site.layout)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		const {global} = notificationsReducer
-		// @ts-ignore
 		if (notificationsReducer && global.error) {
-			// const message = global.msg ? global.msg : 'Internal error' TODO: why not use?
-			// @ts-ignore
-			showToast('ERROR', notificationsReducer.global.msg)
+			const message = global.msg ? global.msg : 'Internal error'
+			showToast('ERROR', message)
 			dispatch(notificationsActions.clearNotifications())
 		}
-		// @ts-ignore
 		if (notificationsReducer && global.success) {
-			// @ts-ignore
 			showToast('SUCCESS', notificationsReducer.global.msg)
 			dispatch(notificationsActions.clearNotifications())
 		}
 	}, [notificationsReducer])
 
 	return (
-		<nav className='navbar fixed-top'>
+		<nav className={`navbar fixed-top ${layout}`}>
 			<Link to='/' className='navbar-brand d-flex align-items-center fredoka_ff'>
-				FlickVault
+				CinemaVault
 			</Link>
 			<SideNav />
 		</nav>

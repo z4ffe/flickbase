@@ -4,14 +4,15 @@ import {isAuth, registerUser, signInUser} from './usersThunk.ts'
 interface IUsersSlice {
 	loading: boolean
 	data: {
-		_id: null | number,
-		email: null | string,
-		firstname: null | string,
-		lastname: null | string,
-		age: null | string,
-		verified: null | string,
+		_id: null | number
+		email: null | string
+		firstname: null | string
+		lastname: null | string
+		age: null | string
+		role: null | 'admin' | 'user'
+		verified: null | string
 	},
-	auth: null | boolean,
+	auth: null | boolean
 }
 
 const DEFAULT_USER_STATE: IUsersSlice = {
@@ -22,6 +23,7 @@ const DEFAULT_USER_STATE: IUsersSlice = {
 		firstname: null,
 		lastname: null,
 		age: null,
+		role: null,
 		verified: null,
 	},
 	auth: null,

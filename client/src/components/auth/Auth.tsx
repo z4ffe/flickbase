@@ -11,8 +11,8 @@ import {errorHelper} from '../../utils/tools'
 
 const Auth = () => {
 	const [register, setRegister] = useState(false)
-	const usersReducer = useAppSelector((state: any) => state.users)
-	const notificationsReducer = useAppSelector((state: any) => state.notifications)
+	const usersReducer = useAppSelector(state => state.users)
+	const notificationsReducer = useAppSelector(state => state.notifications)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
