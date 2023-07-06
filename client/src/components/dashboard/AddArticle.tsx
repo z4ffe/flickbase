@@ -3,23 +3,34 @@ import {Button, Chip, FormControl, FormHelperText, IconButton, InputBase, InputL
 import Divider from '@mui/material/Divider'
 import {FieldArray, FormikProvider, useFormik} from 'formik'
 import React, {useRef, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
 import {articlesInitialValues, articlesValidationSchema} from '../../schemas/articlesForm.tsx'
 import {DashboardTitle} from '../../shared/DashboardTitle.tsx'
+import {Loader} from '../../shared/Loader.tsx'
+import {addArticle} from '../../store/articles/articlesThunk.ts'
 import {errorHelper} from '../../utils/tools.ts'
 import {TextEditor} from './TextEditor.tsx'
 
 export const AddArticle = () => {
-	const articles = useAppSelector(state => state.articles)
+	const articlesLoading = useAppSelector(state => state.articles.loading)
 	const dispatch = useAppDispatch()
 	const actorsRef = useRef<HTMLInputElement>(null)
 	const [editorBlur, setEditorBlur] = useState(false)
+	const navigate = useNavigate()
 
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: articlesInitialValues,
 		validationSchema: articlesValidationSchema,
-		onSubmit: () => console.log(editorBlur),
+		onSubmit: async (values) => {
+			try {
+				await dispatch(addArticle(values)).unwrap()
+				navigate('/dashboard/articles')
+			} catch (error) {
+				console.error(error)
+			}
+		},
 	})
 
 	const handleEditorState = (state: string) => {
@@ -117,7 +128,8 @@ export const AddArticle = () => {
 						: null}
 				</FormControl>
 				<Divider className='my-3' />
-				<Button variant='contained' color='primary' type='submit'>Add article</Button>
+				{articlesLoading ? <Loader /> :
+					<Button variant='contained' color='primary' type='submit'>Add article</Button>}
 			</form>
 		</>
 	)

@@ -15,7 +15,7 @@ interface IUsersSlice {
 	auth: null | boolean
 }
 
-const DEFAULT_USER_STATE: IUsersSlice = {
+const USERS_INITIAL_STATE: IUsersSlice = {
 	loading: false,
 	data: {
 		_id: null,
@@ -31,10 +31,10 @@ const DEFAULT_USER_STATE: IUsersSlice = {
 
 export const usersSlice = createSlice({
 	name: 'users',
-	initialState: DEFAULT_USER_STATE,
+	initialState: USERS_INITIAL_STATE,
 	reducers: {
 		signOut: (state) => {
-			state.data = DEFAULT_USER_STATE.data
+			state.data = USERS_INITIAL_STATE.data
 			state.loading = false
 			state.auth = false
 		},
