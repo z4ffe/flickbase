@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Auth from '../components/auth/Auth.tsx'
+import {AddArticle} from '../components/dashboard/AddArticle.tsx'
 import {ArticlesPanel} from '../components/dashboard/ArticlesPanel.tsx'
 import {Dashboard} from '../components/dashboard/Dashboard.tsx'
 import {DashboardMain} from '../components/dashboard/DashboardMain.tsx'
@@ -41,6 +42,7 @@ const Router = () => {
 								<Route index element={<DashboardMain />} />
 								<Route path='articles' element={<ArticlesPanel />} />
 								<Route path='profile' element={<ProfilePanel />} />
+								<Route path='articles/add' element={<AddArticle />} />
 							</Route>
 						</Routes>
 					</MainLayout>
