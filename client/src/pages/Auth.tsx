@@ -3,11 +3,11 @@ import {useFormik} from 'formik'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import * as Yup from 'yup'
-import {PreventSignIn} from '../../guards/PreventSignIn.tsx'
-import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
-import {Loader} from '../../shared/Loader.tsx'
-import {registerUser, signInUser} from '../../store/users/usersThunk.ts'
-import {errorHelper} from '../../utils/tools'
+import {PreventSignIn} from '../guards/PreventSignIn.tsx'
+import {useAppDispatch, useAppSelector} from '../lib/redux/hooks.ts'
+import {Loader} from '../shared/Loader.tsx'
+import {registerUser, signInUser} from '../store/users/usersThunk.ts'
+import {errorHelper} from '../utils/tools.ts'
 
 const Auth = () => {
 	const [register, setRegister] = useState(false)

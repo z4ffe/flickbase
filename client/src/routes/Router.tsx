@@ -1,17 +1,18 @@
 import {useEffect, useState} from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import Auth from '../components/auth/Auth.tsx'
 import {AddArticle} from '../components/dashboard/AddArticle.tsx'
 import {ArticlesPanel} from '../components/dashboard/ArticlesPanel.tsx'
-import {Dashboard} from '../components/dashboard/Dashboard.tsx'
 import {DashboardMain} from '../components/dashboard/DashboardMain.tsx'
 import {EditArticle} from '../components/dashboard/EditArticle.tsx'
 import {ProfilePanel} from '../components/dashboard/ProfilePanel.tsx'
-import {Home} from '../components/home/Home.tsx'
 import Header from '../components/navigation/Header.tsx'
 import {AuthGuard} from '../guards/AuthGuard.tsx'
 import MainLayout from '../layouts/MainLayout.tsx'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks.ts'
+import Auth from '../pages/Auth.tsx'
+import {Contact} from '../pages/Contact.tsx'
+import {Dashboard} from '../pages/Dashboard.tsx'
+import {Home} from '../pages/Home.tsx'
 import {Loader} from '../shared/Loader.tsx'
 import {isAuth} from '../store/users/usersThunk.ts'
 
@@ -39,6 +40,7 @@ const Router = () => {
 						<Routes>
 							<Route path='/' element={<Home />} />
 							<Route path='auth' element={<Auth />} />
+							<Route path='contact' element={<Contact />} />
 							<Route path='dashboard' element={<AuthGuard><Dashboard /></AuthGuard>}>
 								<Route index element={<DashboardMain />} />
 								<Route path='articles' element={<ArticlesPanel />} />

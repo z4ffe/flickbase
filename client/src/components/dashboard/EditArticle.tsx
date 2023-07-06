@@ -8,7 +8,7 @@ import {useAppDispatch} from '../../lib/redux/hooks.ts'
 import {articlesInitialValues, articlesValidationSchema} from '../../schemas/articlesForm.tsx'
 import {DashboardTitle} from '../../shared/DashboardTitle.tsx'
 import {Loader} from '../../shared/Loader.tsx'
-import {addArticle, getAdminArticle} from '../../store/articles/articlesThunk.ts'
+import {getAdminArticle, updateArticleById} from '../../store/articles/articlesThunk.ts'
 import {errorHelper} from '../../utils/tools.ts'
 import {TextEditor} from './TextEditor.tsx'
 
@@ -41,8 +41,9 @@ export const EditArticle = () => {
 		validationSchema: articlesValidationSchema,
 		onSubmit: async (values) => {
 			try {
-				await dispatch(addArticle(values)).unwrap()
-				navigate('/dashboard/articles')
+				if (params.id) {
+					dispatch(updateArticleById({values, id: params.id}))
+				}
 			} catch (error) {
 				console.error(error)
 			}
