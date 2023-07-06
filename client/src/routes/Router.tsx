@@ -5,6 +5,7 @@ import {AddArticle} from '../components/dashboard/AddArticle.tsx'
 import {ArticlesPanel} from '../components/dashboard/ArticlesPanel.tsx'
 import {Dashboard} from '../components/dashboard/Dashboard.tsx'
 import {DashboardMain} from '../components/dashboard/DashboardMain.tsx'
+import {EditArticle} from '../components/dashboard/EditArticle.tsx'
 import {ProfilePanel} from '../components/dashboard/ProfilePanel.tsx'
 import {Home} from '../components/home/Home.tsx'
 import Header from '../components/navigation/Header.tsx'
@@ -43,6 +44,7 @@ const Router = () => {
 								<Route path='articles' element={<ArticlesPanel />} />
 								<Route path='profile' element={<ProfilePanel />} />
 								<Route path='articles/add' element={<AddArticle />} />
+								<Route path='articles/edit/:id' element={<EditArticle />} />
 							</Route>
 						</Routes>
 					</MainLayout>

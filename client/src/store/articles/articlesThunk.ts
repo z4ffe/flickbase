@@ -20,3 +20,16 @@ export const addArticle = createAsyncThunk('articles/addArticle', async (article
 		throw error
 	}
 })
+
+export const getAdminArticle = createAsyncThunk('articles/getAdminArticle', async (id: string) => {
+	try {
+		const response = await LOCAL_API.get(`/articles/article/${id}`, {
+			headers: {
+				'Authorization': getAuthHeader(),
+			},
+		})
+		return response.data
+	} catch (error) {
+		throw error
+	}
+})
