@@ -14,7 +14,7 @@ const verify = (req, res, resolve, reject, rights) => async (err, user) => {
 		firstname: user.firstname,
 		lastname: user.lastname,
 		age: user.age,
-		verified: user.verified
+		verified: user.verified,
 	}
 	if (rights.length) {
 		const action = rights[0]
@@ -28,7 +28,6 @@ const verify = (req, res, resolve, reject, rights) => async (err, user) => {
 
 
 const auth = (...rights) => async (req, res, next) => {
-	console.log(req.headers)
 	return new Promise((resolve, reject) => {
 		passport.authenticate('jwt', {session: false}, verify(req, res, resolve, reject, rights))(req, res, next)
 	})

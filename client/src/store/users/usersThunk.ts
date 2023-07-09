@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import {AxiosResponse} from 'axios'
+import {AxiosError, AxiosResponse} from 'axios'
 import {LOCAL_API} from '../../lib/axios/instance.ts'
 import {IUserAuth, Users} from '../../types/interfaces/users.ts'
 import {getAuthHeader} from '../../utils/cookies.ts'
@@ -18,9 +18,11 @@ export const registerUser = createAsyncThunk('users/registerUser', async ({email
 			auth: true,
 		}
 	} catch (error) {
-		// @ts-ignore
-		dispatch(notificationsActions.errorGlobal(error.response.data.message))
-		throw error
+		if (error instanceof AxiosError && error.response) {
+			dispatch(notificationsActions.errorGlobal(error.response.data.message))
+		} else {
+			throw error
+		}
 	}
 })
 
@@ -36,9 +38,11 @@ export const signInUser = createAsyncThunk('users/signInUser', async ({email, pa
 			auth: true,
 		}
 	} catch (error) {
-		// @ts-ignore
-		dispatch(notificationsActions.errorGlobal(error.response.data.message))
-		throw error
+		if (error instanceof AxiosError && error.response) {
+			dispatch(notificationsActions.errorGlobal(error.response.data.message))
+		} else {
+			throw error
+		}
 	}
 })
 
@@ -61,3 +65,20 @@ export const isAuth = createAsyncThunk('users/isAuth', async () => {
 	}
 })
 
+export const updateUserProfile = createAsyncThunk('users/updateUserProfile', async (values: any, {dispatch}) => {
+	try {
+		const response: AxiosResponse<Users> = await LOCAL_API.patch(`/user/profile/`, values, {
+			headers: {
+				'Authorization': getAuthHeader(),
+			},
+		})
+		dispatch(notificationsActions.successGlobal('Profile updated'))
+		return response.data
+	} catch (error) {
+		if (error instanceof AxiosError && error.response) {
+			dispatch(notificationsActions.errorGlobal(error.response.data.message))
+		} else {
+			throw error
+		}
+	}
+})

@@ -5,6 +5,9 @@ export interface Users {
 	role: 'admin' | 'user'
 	verified: boolean
 	date: string
+	age?: number,
+	firstname?: string
+	lastname?: string
 }
 
 export interface IUserAuth {

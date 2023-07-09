@@ -1,10 +1,11 @@
 import {DashboardTitle} from '../../shared/DashboardTitle.tsx'
+import {ProfileEdit} from './ProfileEdit.tsx'
 
 export const ProfilePanel = () => {
 	return (
 		<div>
 			<DashboardTitle text='Profile'></DashboardTitle>
-			<h1>Profile</h1>
+			<ProfileEdit />
 		</div>
 	)
 }

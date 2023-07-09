@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {isAuth, registerUser, signInUser} from './usersThunk.ts'
+import {isAuth, registerUser, signInUser, updateUserProfile} from './usersThunk.ts'
 
 interface IUsersSlice {
 	loading: boolean
@@ -8,7 +8,7 @@ interface IUsersSlice {
 		email: null | string
 		firstname?: null | string
 		lastname?: null | string
-		age?: null | string
+		age?: null | number
 		role: null | 'admin' | 'user'
 		verified: boolean
 	},
@@ -45,8 +45,10 @@ export const usersSlice = createSlice({
 		})
 		builder.addCase(registerUser.fulfilled, (state, action) => {
 			state.loading = false
-			state.data = action.payload.data
-			state.auth = action.payload.auth
+			if (action.payload) {
+				state.data = action.payload.data
+				state.auth = action.payload.auth
+			}
 		})
 		builder.addCase(registerUser.rejected, (state) => {
 			state.loading = false
@@ -56,8 +58,10 @@ export const usersSlice = createSlice({
 		})
 		builder.addCase(signInUser.fulfilled, (state, action) => {
 			state.loading = false
-			state.data = action.payload.data
-			state.auth = action.payload.auth
+			if (action.payload) {
+				state.data = action.payload.data
+				state.auth = action.payload.auth
+			}
 		})
 		builder.addCase(signInUser.rejected, (state) => {
 			state.loading = false
@@ -75,6 +79,11 @@ export const usersSlice = createSlice({
 		})
 		builder.addCase(isAuth.rejected, (state) => {
 			state.loading = false
+		})
+		builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+			state.data.firstname = action.payload?.firstname
+			state.data.lastname = action.payload?.lastname
+			state.data.age = action.payload?.age
 		})
 	},
 })
