@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
 import {notificationsActions} from '../../store/notifications/notificationsSlice.ts'
 
-import {showToast} from '../../utils/tools.ts'
+import {showToast} from '../../utils/notifications.ts'
 import SideNav from './SideNav.tsx'
 
 const Header = () => {

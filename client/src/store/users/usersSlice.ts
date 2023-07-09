@@ -6,11 +6,11 @@ interface IUsersSlice {
 	data: {
 		_id: null | number
 		email: null | string
-		firstname: null | string
-		lastname: null | string
-		age: null | string
+		firstname?: null | string
+		lastname?: null | string
+		age?: null | string
 		role: null | 'admin' | 'user'
-		verified: null | string
+		verified: boolean
 	},
 	auth: null | boolean
 }
@@ -24,7 +24,7 @@ const USERS_INITIAL_STATE: IUsersSlice = {
 		lastname: null,
 		age: null,
 		role: null,
-		verified: null,
+		verified: false,
 	},
 	auth: null,
 }

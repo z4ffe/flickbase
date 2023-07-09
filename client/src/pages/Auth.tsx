@@ -7,7 +7,7 @@ import {PreventSignIn} from '../guards/PreventSignIn.tsx'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks.ts'
 import {Loader} from '../shared/Loader.tsx'
 import {registerUser, signInUser} from '../store/users/usersThunk.ts'
-import {errorHelper} from '../utils/tools.ts'
+import {errorHelper} from '../utils/formikError.ts'
 
 const Auth = () => {
 	const [register, setRegister] = useState(false)

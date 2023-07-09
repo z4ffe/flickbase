@@ -1,5 +1,5 @@
-export interface IArticles {
-	_id: number
+export interface IArticle {
+	_id: string
 	title: string
 	content: string
 	excerpt: string

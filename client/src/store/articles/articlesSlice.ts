@@ -1,13 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {IArticles} from '../../types/interfaces/articles.ts'
-import {addArticle} from './articlesThunk.ts'
+import {IArticle} from '../../types/interfaces/articles.ts'
+import {IPaginate} from '../../types/interfaces/paginate.ts'
+import {addArticle, getPaginatedArticles, updateArticleStatusById} from './articlesThunk.ts'
 
 interface IArticlesSlice {
 	homeSort: {}
 	loading: boolean
-	articles: IArticles[]
+	articles: IArticle[]
 	current: null
-	lastAdded: IArticles | null
+	lastAdded: IArticle | null
+	dashboardArticles: IPaginate | null
 }
 
 const ARTICLES_INITIAL_STATE: IArticlesSlice = {
@@ -16,6 +18,7 @@ const ARTICLES_INITIAL_STATE: IArticlesSlice = {
 	articles: [],
 	current: null,
 	lastAdded: null,
+	dashboardArticles: null,
 }
 
 export const articlesSlice = createSlice({
@@ -32,6 +35,24 @@ export const articlesSlice = createSlice({
 		})
 		builder.addCase(addArticle.rejected, (state) => {
 			state.loading = false
+		})
+		builder.addCase(getPaginatedArticles.pending, (state) => {
+			state.loading = true
+		})
+		builder.addCase(getPaginatedArticles.fulfilled, (state, action) => {
+			state.loading = false
+			state.dashboardArticles = action.payload
+		})
+		builder.addCase(getPaginatedArticles.rejected, (state) => {
+			state.loading = false
+		})
+		builder.addCase(updateArticleStatusById.fulfilled, (state, action) => {
+			if (state.dashboardArticles) {
+				const index = state.dashboardArticles.docs.findIndex(article => article._id === action.payload._id)
+				const newState = [...state.dashboardArticles.docs]
+				newState[index] = action.payload
+				return {...state, dashboardArticles: {...state.dashboardArticles, docs: newState}}
+			}
 		})
 	},
 })

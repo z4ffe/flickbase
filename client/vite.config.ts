@@ -5,6 +5,23 @@ import {defineConfig} from 'vite'
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		port: 3000
-	}
+		port: 3000,
+	},
+	optimizeDeps: {
+		esbuildOptions: {
+			target: 'esnext',
+			define: {
+				global: 'globalThis',
+			},
+			supported: {
+				bigint: true,
+			},
+		},
+	},
+	build: {
+		target: ['esnext'],
+	},
+	resolve: {
+		mainFields: [],
+	},
 })

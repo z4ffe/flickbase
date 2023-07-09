@@ -15,7 +15,7 @@ import {Link as RouterLink, useNavigate} from 'react-router-dom'
 import {useAppDispatch, useAppSelector} from '../../lib/redux/hooks.ts'
 import {usersActions} from '../../store/store.ts'
 import {removeTokenCookie} from '../../utils/cookies'
-import {showToast} from '../../utils/tools'
+import {showToast} from '../../utils/notifications.ts'
 
 const SideNav = () => {
 	const usersReducer = useAppSelector(state => state.users)

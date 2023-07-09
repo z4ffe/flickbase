@@ -9,7 +9,7 @@ import {articlesInitialValues, articlesValidationSchema} from '../../schemas/art
 import {DashboardTitle} from '../../shared/DashboardTitle.tsx'
 import {Loader} from '../../shared/Loader.tsx'
 import {addArticle} from '../../store/articles/articlesThunk.ts'
-import {errorHelper} from '../../utils/tools.ts'
+import {errorHelper} from '../../utils/formikError.ts'
 import {TextEditor} from './TextEditor.tsx'
 
 export const AddArticle = () => {

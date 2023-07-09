@@ -9,7 +9,7 @@ import {articlesInitialValues, articlesValidationSchema} from '../../schemas/art
 import {DashboardTitle} from '../../shared/DashboardTitle.tsx'
 import {Loader} from '../../shared/Loader.tsx'
 import {getAdminArticle, updateArticleById} from '../../store/articles/articlesThunk.ts'
-import {errorHelper} from '../../utils/tools.ts'
+import {errorHelper} from '../../utils/formikError.ts'
 import {TextEditor} from './TextEditor.tsx'
 
 export const EditArticle = () => {
@@ -19,8 +19,8 @@ export const EditArticle = () => {
 	const [editorData, setEditorData] = useState(null)
 	const actorsRef = useRef<HTMLInputElement>(null)
 	const [editorBlur, setEditorBlur] = useState(false)
-	const navigate = useNavigate()
 	const params = useParams()
+	const navigate = useNavigate()
 
 	const fetchAdminArticle = async () => {
 		if (params.id) {
@@ -42,10 +42,12 @@ export const EditArticle = () => {
 		onSubmit: async (values) => {
 			try {
 				if (params.id) {
-					dispatch(updateArticleById({values, id: params.id}))
+					await dispatch(updateArticleById({values, id: params.id}))
 				}
 			} catch (error) {
 				console.error(error)
+			} finally {
+				navigate('/dashboard/articles')
 			}
 		},
 	})
